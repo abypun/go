@@ -29,7 +29,7 @@ func assert(p bool) {
 
 // For outputting debug information on dictionary format and instantiated dictionaries
 // (type arg, derived types, sub-dictionary, and itab entries).
-var infoPrintMode = false
+var infoPrintMode = true
 
 func infoPrint(format string, a ...interface{}) {
 	if infoPrintMode {
@@ -128,22 +128,25 @@ func (g *genInst) scanForGenCalls(decl ir.Node) {
 	modified := false
 	closureRequired := false
 	// declInfo will be non-nil exactly if we are scanning an instantiated function
-	declInfo := g.instInfoMap[decl.Sym()]
+	declInfo := g.instInfoMap[decl.Sym()] // decl.(*ir.Func).Nname.sym
 
 	ir.Visit(decl, func(n ir.Node) {
 		if n.Op() == ir.OFUNCINST {
 			// generic F, not immediately called
+			// f := FuncTypeParam001[int] ?
 			closureRequired = true
 		}
 		if (n.Op() == ir.OMETHEXPR || n.Op() == ir.OMETHVALUE) && len(deref(n.(*ir.SelectorExpr).X.Type()).RParams()) > 0 && !types.IsInterfaceMethod(n.(*ir.SelectorExpr).Selection.Type) {
 			// T.M or x.M, where T or x is generic, but not immediately
 			// called. Not necessary if the method selected is
 			// actually for an embedded interface field.
+			// f := T.M ?
 			closureRequired = true
 		}
 		if n.Op() == ir.OCALL && n.(*ir.CallExpr).X.Op() == ir.OFUNCINST {
 			// We have found a function call using a generic function
 			// instantiation.
+			// 普通函数中调用泛型函数 FuncTypeParam001(1)
 			call := n.(*ir.CallExpr)
 			inst := call.X.(*ir.InstExpr)
 			nameNode, isMeth := g.getInstNameNode(inst)
