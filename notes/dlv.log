@@ -1,0 +1,1040 @@
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:104 (PC: 0xbf3a9e)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+    99:
+   100: // scanForGenCalls scans a single function (or global assignment), looking for
+   101: // references to generic functions/methods. At each such reference, it creates any
+   102: // required instantiation and transforms the reference.
+   103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+=> 104:         switch decl.Op() {
+   105:         case ir.ODCLFUNC:
+   106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+   109:                 }
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:113 (PC: 0xbf3aa7)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+   111:                 ir.CurFunc = decl.(*ir.Func)
+   112:
+=> 113:         case ir.OAS, ir.OAS2, ir.OAS2DOTTYPE, ir.OAS2FUNC, ir.OAS2MAPR, ir.OAS2RECV, ir.OASOP:
+   114:                 // These are all the various kinds of global assignments,
+   115:                 // whose right-hand-sides might contain a function
+   116:                 // instantiation.
+   117:
+   118:         default:
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:105 (PC: 0xbf3aaf)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   100: // scanForGenCalls scans a single function (or global assignment), looking for
+   101: // references to generic functions/methods. At each such reference, it creates any
+   102: // required instantiation and transforms the reference.
+   103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+   104:         switch decl.Op() {
+=> 105:         case ir.ODCLFUNC:
+   106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:106 (PC: 0xbf3ab7)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   101: // references to generic functions/methods. At each such reference, it creates any
+   102: // required instantiation and transforms the reference.
+   103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+   104:         switch decl.Op() {
+   105:         case ir.ODCLFUNC:
+=> 106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+   111:                 ir.CurFunc = decl.(*ir.Func)
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:108 (PC: 0xbf3e56)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+   104:         switch decl.Op() {
+   105:         case ir.ODCLFUNC:
+   106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+=> 108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+   111:                 ir.CurFunc = decl.(*ir.Func)
+   112:
+   113:         case ir.OAS, ir.OAS2, ir.OAS2DOTTYPE, ir.OAS2FUNC, ir.OAS2MAPR, ir.OAS2RECV, ir.OASOP:
+(dlv)
+> cmd/compile/internal/noder.(*genInst).buildInstantiations() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:59 (PC: 0xbf37c9)
+Warning: debugging optimized function
+Values returned:
+
+Warning: listing may not match stale executable
+    54:         // Instantiate the methods of instantiated generic types that we have seen so far.
+    55:         g.instantiateMethods()
+    56:
+    57:         // Scan all currentdecls for call to generic functions/methods.
+    58:         n := len(typecheck.Target.Decls)
+=>  59:         for i := 0; i < n; i++ {
+    60:                 g.scanForGenCalls(typecheck.Target.Decls[i])
+    61:         }
+    62:
+    63:         // Scan all new instantiations created due to g.instantiateMethods() and the
+    64:         // scan of current decls. This loop purposely runs until no new
+(dlv)
+> cmd/compile/internal/noder.(*genInst).buildInstantiations() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:60 (PC: 0xbf37ea)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+    55:         g.instantiateMethods()
+    56:
+    57:         // Scan all currentdecls for call to generic functions/methods.
+    58:         n := len(typecheck.Target.Decls)
+    59:         for i := 0; i < n; i++ {
+=>  60:                 g.scanForGenCalls(typecheck.Target.Decls[i])
+    61:         }
+    62:
+    63:         // Scan all new instantiations created due to g.instantiateMethods() and the
+    64:         // scan of current decls. This loop purposely runs until no new
+    65:         // instantiations are created.
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:103 (hits goroutine(1):2 total:2) (PC: 0xbf3a6f)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+    98: }
+    99:
+   100: // scanForGenCalls scans a single function (or global assignment), looking for
+   101: // references to generic functions/methods. At each such reference, it creates any
+   102: // required instantiation and transforms the reference.
+=> 103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+   104:         switch decl.Op() {
+   105:         case ir.ODCLFUNC:
+   106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:104 (PC: 0xbf3a9e)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+    99:
+   100: // scanForGenCalls scans a single function (or global assignment), looking for
+   101: // references to generic functions/methods. At each such reference, it creates any
+   102: // required instantiation and transforms the reference.
+   103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+=> 104:         switch decl.Op() {
+   105:         case ir.ODCLFUNC:
+   106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+   109:                 }
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:113 (PC: 0xbf3aa7)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+   111:                 ir.CurFunc = decl.(*ir.Func)
+   112:
+=> 113:         case ir.OAS, ir.OAS2, ir.OAS2DOTTYPE, ir.OAS2FUNC, ir.OAS2MAPR, ir.OAS2RECV, ir.OASOP:
+   114:                 // These are all the various kinds of global assignments,
+   115:                 // whose right-hand-sides might contain a function
+   116:                 // instantiation.
+   117:
+   118:         default:
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:105 (PC: 0xbf3aaf)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   100: // scanForGenCalls scans a single function (or global assignment), looking for
+   101: // references to generic functions/methods. At each such reference, it creates any
+   102: // required instantiation and transforms the reference.
+   103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+   104:         switch decl.Op() {
+=> 105:         case ir.ODCLFUNC:
+   106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:106 (PC: 0xbf3ab7)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   101: // references to generic functions/methods. At each such reference, it creates any
+   102: // required instantiation and transforms the reference.
+   103: func (g *genInst) scanForGenCalls(decl ir.Node) {
+   104:         switch decl.Op() {
+   105:         case ir.ODCLFUNC:
+=> 106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+   111:                 ir.CurFunc = decl.(*ir.Func)
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:111 (PC: 0xbf3add)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   106:                 if decl.Type().HasTParam() {
+   107:                         // Skip any generic functions
+   108:                         return
+   109:                 }
+   110:                 // transformCall() below depends on CurFunc being set.
+=> 111:                 ir.CurFunc = decl.(*ir.Func)
+   112:
+   113:         case ir.OAS, ir.OAS2, ir.OAS2DOTTYPE, ir.OAS2FUNC, ir.OAS2MAPR, ir.OAS2RECV, ir.OASOP:
+   114:                 // These are all the various kinds of global assignments,
+   115:                 // whose right-hand-sides might contain a function
+   116:                 // instantiation.
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:128 (PC: 0xbf3b25)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   123:         }
+   124:
+   125:         // Search for any function references using generic function/methods. Then
+   126:         // create the needed instantiated function if it hasn't been created yet, and
+   127:         // change to calling that function directly.
+=> 128:         modified := false
+   129:         closureRequired := false
+   130:         // declInfo will be non-nil exactly if we are scanning an instantiated function
+   131:         declInfo := g.instInfoMap[decl.Sym()] // decl.(*ir.Func).Nname.sym
+   132:
+   133:         ir.Visit(decl, func(n ir.Node) {
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:129 (PC: 0xbf3b36)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   124:
+   125:         // Search for any function references using generic function/methods. Then
+   126:         // create the needed instantiated function if it hasn't been created yet, and
+   127:         // change to calling that function directly.
+   128:         modified := false
+=> 129:         closureRequired := false
+   130:         // declInfo will be non-nil exactly if we are scanning an instantiated function
+   131:         declInfo := g.instInfoMap[decl.Sym()] // decl.(*ir.Func).Nname.sym
+   132:
+   133:         ir.Visit(decl, func(n ir.Node) {
+   134:                 if n.Op() == ir.OFUNCINST {
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:131 (PC: 0xbf3b4a)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   126:         // create the needed instantiated function if it hasn't been created yet, and
+   127:         // change to calling that function directly.
+   128:         modified := false
+   129:         closureRequired := false
+   130:         // declInfo will be non-nil exactly if we are scanning an instantiated function
+=> 131:         declInfo := g.instInfoMap[decl.Sym()] // decl.(*ir.Func).Nname.sym
+   132:
+   133:         ir.Visit(decl, func(n ir.Node) {
+   134:                 if n.Op() == ir.OFUNCINST {
+   135:                         // generic F, not immediately called
+   136:                         // f := FuncTypeParam001[int] ?
+(dlv)
+> cmd/compile/internal/noder.(*genInst).scanForGenCalls() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:133 (PC: 0xbf3b8d)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   128:         modified := false
+   129:         closureRequired := false
+   130:         // declInfo will be non-nil exactly if we are scanning an instantiated function
+   131:         declInfo := g.instInfoMap[decl.Sym()] // decl.(*ir.Func).Nname.sym
+   132:
+=> 133:         ir.Visit(decl, func(n ir.Node) {
+   134:                 if n.Op() == ir.OFUNCINST {
+   135:                         // generic F, not immediately called
+   136:                         // f := FuncTypeParam001[int] ?
+   137:                         closureRequired = true
+   138:                 }
+(dlv) p typecheck.Target.Decls[0]
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Func) *{
+        miniNode: cmd/compile/internal/ir.miniNode {
+                pos: (*"cmd/internal/src.XPos")(0xc000436f20),
+                op: ODCLFUNC (48),
+                bits: 4,
+                esc: 0,},
+        Body: cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+                ...,
+        ],
+        Iota: -1,
+        Nname: *cmd/compile/internal/ir.Name {
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc000441110),
+                BuiltinOp: OXXX (0),
+                Class: PFUNC (7),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc0004485f0),
+                Func: *(*"cmd/compile/internal/ir.Func")(0xc000436f20),
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Func) ...,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+        OClosure: *cmd/compile/internal/ir.ClosureExpr nil,
+        Shortname: *cmd/compile/internal/types.Sym nil,
+        Enter: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+        Exit: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+        Dcl: []*cmd/compile/internal/ir.Name len: 1, cap: 1, [
+                *(*"cmd/compile/internal/ir.Name")(0xc000441380),
+        ],
+        ClosureVars: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+        Closures: []*cmd/compile/internal/ir.Func len: 0, cap: 0, nil,
+        Parents: []cmd/compile/internal/ir.ScopeID len: 0, cap: 0, [],
+        Marks: []cmd/compile/internal/ir.Mark len: 0, cap: 0, [],
+        FieldTrack: map[*cmd/internal/obj.LSym]struct {} nil,
+        DebugInfo: interface {} nil,
+        LSym: *cmd/internal/obj.LSym nil,
+        Inl: *cmd/compile/internal/ir.Inline {
+                Cost: 1,
+                Dcl: []*cmd/compile/internal/ir.Name len: 1, cap: 1, [
+                        *(*"cmd/compile/internal/ir.Name")(0xc000441380),
+                ],
+                Body: []cmd/compile/internal/ir.Node len: 1, cap: 1, [
+                        ...,
+                ],
+                CanDelayResults: false,},
+        Closgen: 0,
+        Label: 0,
+        Endlineno: cmd/internal/src.XPos {index: 2, lico: 32784},
+        WBPos: cmd/internal/src.XPos {index: 0, lico: 0},
+        Pragma: Noinline (16),
+        flags: 0,
+        ABI: ABIInternal (1),
+        ABIRefs: 0,
+        NumDefers: 0,
+        NumReturns: 0,
+        NWBRCalls: *[]cmd/compile/internal/ir.SymAndPos nil,
+        WrappedFunc: *cmd/compile/internal/ir.Func nil,}
+(dlv) p typecheck.Target.Decls[0].Body
+cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+        *cmd/compile/internal/ir.CallExpr {
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc000380870),
+                origNode: (*"cmd/compile/internal/ir.origNode")(0xc0003808a8),
+                X: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) ...,
+                Args: cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+                        ...,
+                ],
+                KeepAlive: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+                IsDDD: false,
+                NoInline: false,},
+]
+(dlv) p typecheck.Target.Decls[0].Body[0]
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.CallExpr) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000380870),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc000413ab0),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        origNode: cmd/compile/internal/ir.origNode {
+                orig: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.CallExpr) ...,},
+        X: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc000441450),
+                BuiltinOp: OXXX (0),
+                Class: PFUNC (7),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc00043c1e0),
+                Func: *(*"cmd/compile/internal/ir.Func")(0xc0004371e0),
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node nil,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+        Args: cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+                ...,
+        ],
+        KeepAlive: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+        IsDDD: false,
+        NoInline: false,}
+(dlv) p typecheck.Target.Decls[0].Body[0].X
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000441450),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc0004135e0),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        BuiltinOp: OXXX (0),
+        Class: PFUNC (7),
+        pragma: 0,
+        flags: 0,
+        DictIndex: 0,
+        sym: *cmd/compile/internal/types.Sym {
+                Linkname: "",
+                Pkg: *(*"cmd/compile/internal/types.Pkg")(0xc00042bd10),
+                Name: "Println",
+                Def: cmd/compile/internal/types.Object(*cmd/compile/internal/ir.Name) ...,
+                Block: 0,
+                Lastlineno: (*"cmd/internal/src.XPos")(0xc00043c21c),
+                flags: 16,},
+        Func: *cmd/compile/internal/ir.Func {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc0004371e0),
+                Body: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Iota: -1,
+                Nname: *(*"cmd/compile/internal/ir.Name")(0xc000441450),
+                OClosure: *cmd/compile/internal/ir.ClosureExpr nil,
+                Shortname: *cmd/compile/internal/types.Sym nil,
+                Enter: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Exit: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Dcl: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+                ClosureVars: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+                Closures: []*cmd/compile/internal/ir.Func len: 0, cap: 0, nil,
+                Parents: []cmd/compile/internal/ir.ScopeID len: 0, cap: 0, nil,
+                Marks: []cmd/compile/internal/ir.Mark len: 0, cap: 0, nil,
+                FieldTrack: map[*cmd/internal/obj.LSym]struct {} nil,
+                DebugInfo: interface {} nil,
+                LSym: *cmd/internal/obj.LSym nil,
+                Inl: *(*"cmd/compile/internal/ir.Inline")(0xc00044c7c0),
+                Closgen: 0,
+                Label: 0,
+                Endlineno: (*"cmd/internal/src.XPos")(0xc000437300),
+                WBPos: (*"cmd/internal/src.XPos")(0xc000437308),
+                Pragma: 0,
+                flags: 0,
+                ABI: ABIInternal (1),
+                ABIRefs: 0,
+                NumDefers: 0,
+                NumReturns: 0,
+                NWBRCalls: *[]cmd/compile/internal/ir.SymAndPos nil,
+                WrappedFunc: *cmd/compile/internal/ir.Func nil,},
+        Offset_: 0,
+        val: go/constant.Value nil,
+        Opt: interface {} nil,
+        Embed: *[]cmd/compile/internal/ir.Embed nil,
+        PkgName: *cmd/compile/internal/ir.PkgName nil,
+        Defn: cmd/compile/internal/ir.Node nil,
+        Curfn: *cmd/compile/internal/ir.Func nil,
+        Ntype: cmd/compile/internal/ir.Ntype nil,
+        Heapaddr: *cmd/compile/internal/ir.Name nil,
+        Innermost: *cmd/compile/internal/ir.Name nil,
+        Outer: *cmd/compile/internal/ir.Name nil,}
+(dlv) p typecheck.Target.Decls[0].Body[0].X
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000441450),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc0004135e0),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        BuiltinOp: OXXX (0),
+        Class: PFUNC (7),
+        pragma: 0,
+        flags: 0,
+        DictIndex: 0,
+        sym: *cmd/compile/internal/types.Sym {
+                Linkname: "",
+                Pkg: *(*"cmd/compile/internal/types.Pkg")(0xc00042bd10),
+                Name: "Println",
+                Def: cmd/compile/internal/types.Object(*cmd/compile/internal/ir.Name) ...,
+                Block: 0,
+                Lastlineno: (*"cmd/internal/src.XPos")(0xc00043c21c),
+                flags: 16,},
+        Func: *cmd/compile/internal/ir.Func {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc0004371e0),
+                Body: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Iota: -1,
+                Nname: *(*"cmd/compile/internal/ir.Name")(0xc000441450),
+                OClosure: *cmd/compile/internal/ir.ClosureExpr nil,
+                Shortname: *cmd/compile/internal/types.Sym nil,
+                Enter: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Exit: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Dcl: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+                ClosureVars: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+                Closures: []*cmd/compile/internal/ir.Func len: 0, cap: 0, nil,
+                Parents: []cmd/compile/internal/ir.ScopeID len: 0, cap: 0, nil,
+                Marks: []cmd/compile/internal/ir.Mark len: 0, cap: 0, nil,
+                FieldTrack: map[*cmd/internal/obj.LSym]struct {} nil,
+                DebugInfo: interface {} nil,
+                LSym: *cmd/internal/obj.LSym nil,
+                Inl: *(*"cmd/compile/internal/ir.Inline")(0xc00044c7c0),
+                Closgen: 0,
+                Label: 0,
+                Endlineno: (*"cmd/internal/src.XPos")(0xc000437300),
+                WBPos: (*"cmd/internal/src.XPos")(0xc000437308),
+                Pragma: 0,
+                flags: 0,
+                ABI: ABIInternal (1),
+                ABIRefs: 0,
+                NumDefers: 0,
+                NumReturns: 0,
+                NWBRCalls: *[]cmd/compile/internal/ir.SymAndPos nil,
+                WrappedFunc: *cmd/compile/internal/ir.Func nil,},
+        Offset_: 0,
+        val: go/constant.Value nil,
+        Opt: interface {} nil,
+        Embed: *[]cmd/compile/internal/ir.Embed nil,
+        PkgName: *cmd/compile/internal/ir.PkgName nil,
+        Defn: cmd/compile/internal/ir.Node nil,
+        Curfn: *cmd/compile/internal/ir.Func nil,
+        Ntype: cmd/compile/internal/ir.Ntype nil,
+        Heapaddr: *cmd/compile/internal/ir.Name nil,
+        Innermost: *cmd/compile/internal/ir.Name nil,
+        Outer: *cmd/compile/internal/ir.Name nil,}
+(dlv) p typecheck.Target.Decls[0].Body[0].X.Targs
+Command failed: data.X has no member Targs
+(dlv) p typecheck.Target.Decls[0].Body[0]
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.CallExpr) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000380870),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc000413ab0),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        origNode: cmd/compile/internal/ir.origNode {
+                orig: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.CallExpr) ...,},
+        X: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc000441450),
+                BuiltinOp: OXXX (0),
+                Class: PFUNC (7),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc00043c1e0),
+                Func: *(*"cmd/compile/internal/ir.Func")(0xc0004371e0),
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node nil,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+        Args: cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+                ...,
+        ],
+        KeepAlive: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+        IsDDD: false,
+        NoInline: false,}
+(dlv) p typecheck.Target.Decls[1].Body[0]
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.CallExpr) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000380900),
+                typ: *cmd/compile/internal/types.Type nil,
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        origNode: cmd/compile/internal/ir.origNode {
+                orig: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.CallExpr) ...,},
+        X: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.InstExpr) *{
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc0004504e0),
+                X: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) ...,
+                Targs: []cmd/compile/internal/ir.Node len: 1, cap: 1, [
+                        ...,
+                ],},
+        Args: cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+                ...,
+        ],
+        KeepAlive: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+        IsDDD: false,
+        NoInline: false,}
+(dlv) p typecheck.Target.Decls[1].Body[0].X
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.InstExpr) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc0004504e0),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc000413c70),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        X: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc000441110),
+                BuiltinOp: OXXX (0),
+                Class: PFUNC (7),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc0004485f0),
+                Func: *(*"cmd/compile/internal/ir.Func")(0xc000436f20),
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Func) ...,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+        Targs: []cmd/compile/internal/ir.Node len: 1, cap: 1, [
+                ...,
+        ],}
+(dlv) p typecheck.Target.Decls[1].Body[0].X.Targs
+[]cmd/compile/internal/ir.Node len: 1, cap: 1, [
+        *cmd/compile/internal/ir.Name {
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc00039f040),
+                BuiltinOp: OXXX (0),
+                Class: Pxxx (0),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc00009ebe0),
+                Func: *cmd/compile/internal/ir.Func nil,
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node nil,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+]
+(dlv) p typecheck.Target.Decls[1].Body[0].X
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.InstExpr) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc0004504e0),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc000413c70),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        X: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc000441110),
+                BuiltinOp: OXXX (0),
+                Class: PFUNC (7),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc0004485f0),
+                Func: *(*"cmd/compile/internal/ir.Func")(0xc000436f20),
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Func) ...,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+        Targs: []cmd/compile/internal/ir.Node len: 1, cap: 1, [
+                ...,
+        ],}
+(dlv) p typecheck.Target.Decls[1].Body[0].X.X
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000441110),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc000413030),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        BuiltinOp: OXXX (0),
+        Class: PFUNC (7),
+        pragma: 0,
+        flags: 0,
+        DictIndex: 0,
+        sym: *cmd/compile/internal/types.Sym {
+                Linkname: "",
+                Pkg: *(*"cmd/compile/internal/types.Pkg")(0xc00009e5a0),
+                Name: "FuncTypeParam001",
+                Def: cmd/compile/internal/types.Object(*cmd/compile/internal/ir.Name) ...,
+                Block: 0,
+                Lastlineno: (*"cmd/internal/src.XPos")(0xc00044862c),
+                flags: 17,},
+        Func: *cmd/compile/internal/ir.Func {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000436f20),
+                Body: cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+                        ...,
+                ],
+                Iota: -1,
+                Nname: *(*"cmd/compile/internal/ir.Name")(0xc000441110),
+                OClosure: *cmd/compile/internal/ir.ClosureExpr nil,
+                Shortname: *cmd/compile/internal/types.Sym nil,
+                Enter: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Exit: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Dcl: []*cmd/compile/internal/ir.Name len: 1, cap: 1, [
+                        *(*"cmd/compile/internal/ir.Name")(0xc000441380),
+                ],
+                ClosureVars: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+                Closures: []*cmd/compile/internal/ir.Func len: 0, cap: 0, nil,
+                Parents: []cmd/compile/internal/ir.ScopeID len: 0, cap: 0, [],
+                Marks: []cmd/compile/internal/ir.Mark len: 0, cap: 0, [],
+                FieldTrack: map[*cmd/internal/obj.LSym]struct {} nil,
+                DebugInfo: interface {} nil,
+                LSym: *cmd/internal/obj.LSym nil,
+                Inl: *(*"cmd/compile/internal/ir.Inline")(0xc00044c840),
+                Closgen: 0,
+                Label: 0,
+                Endlineno: (*"cmd/internal/src.XPos")(0xc000437040),
+                WBPos: (*"cmd/internal/src.XPos")(0xc000437048),
+                Pragma: Noinline (16),
+                flags: 0,
+                ABI: ABIInternal (1),
+                ABIRefs: 0,
+                NumDefers: 0,
+                NumReturns: 0,
+                NWBRCalls: *[]cmd/compile/internal/ir.SymAndPos nil,
+                WrappedFunc: *cmd/compile/internal/ir.Func nil,},
+        Offset_: 0,
+        val: go/constant.Value nil,
+        Opt: interface {} nil,
+        Embed: *[]cmd/compile/internal/ir.Embed nil,
+        PkgName: *cmd/compile/internal/ir.PkgName nil,
+        Defn: cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Func) *{
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc000436f20),
+                Body: cmd/compile/internal/ir.Nodes len: 1, cap: 1, [
+                        ...,
+                ],
+                Iota: -1,
+                Nname: *(*"cmd/compile/internal/ir.Name")(0xc000441110),
+                OClosure: *cmd/compile/internal/ir.ClosureExpr nil,
+                Shortname: *cmd/compile/internal/types.Sym nil,
+                Enter: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Exit: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                Dcl: []*cmd/compile/internal/ir.Name len: 1, cap: 1, [
+                        *(*"cmd/compile/internal/ir.Name")(0xc000441380),
+                ],
+                ClosureVars: []*cmd/compile/internal/ir.Name len: 0, cap: 0, nil,
+                Closures: []*cmd/compile/internal/ir.Func len: 0, cap: 0, nil,
+                Parents: []cmd/compile/internal/ir.ScopeID len: 0, cap: 0, [],
+                Marks: []cmd/compile/internal/ir.Mark len: 0, cap: 0, [],
+                FieldTrack: map[*cmd/internal/obj.LSym]struct {} nil,
+                DebugInfo: interface {} nil,
+                LSym: *cmd/internal/obj.LSym nil,
+                Inl: *(*"cmd/compile/internal/ir.Inline")(0xc00044c840),
+                Closgen: 0,
+                Label: 0,
+                Endlineno: (*"cmd/internal/src.XPos")(0xc000437040),
+                WBPos: (*"cmd/internal/src.XPos")(0xc000437048),
+                Pragma: Noinline (16),
+                flags: 0,
+                ABI: ABIInternal (1),
+                ABIRefs: 0,
+                NumDefers: 0,
+                NumReturns: 0,
+                NWBRCalls: *[]cmd/compile/internal/ir.SymAndPos nil,
+                WrappedFunc: *cmd/compile/internal/ir.Func nil,},
+        Curfn: *cmd/compile/internal/ir.Func nil,
+        Ntype: cmd/compile/internal/ir.Ntype nil,
+        Heapaddr: *cmd/compile/internal/ir.Name nil,
+        Innermost: *cmd/compile/internal/ir.Name nil,
+        Outer: *cmd/compile/internal/ir.Name nil,}
+(dlv) funcs getInstantiation
+cmd/compile/internal/noder.(*genInst).getInstantiation
+(dlv) b cmd/compile/internal/noder.(*genInst).getInstantiation
+Breakpoint 3 set at 0xbf72ef for cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:626
+(dlv) c
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:626 (hits goroutine(1):1 total:1) (PC: 0xbf72ef)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   621:                 nameNode.Func.Body = nameNode.Func.Inl.Body
+   622:                 nameNode.Func.Dcl = nameNode.Func.Inl.Dcl
+   623:         }
+   624: }
+   625:
+=> 626: // getInstantiation gets the instantiantion and dictionary of the function or method nameNode
+   627: // with the type arguments shapes. If the instantiated function is not already
+   628: // cached, then it calls genericSubst to create the new instantiation.
+   629: func (g *genInst) getInstantiation(nameNode *ir.Name, shapes []*types.Type, isMeth bool) *instInfo {
+   630:         if nameNode.Func == nil {
+   631:                 // If nameNode.Func is nil, this must be a reference to a method of
+(dlv) bt
+ 0  0x0000000000bf72ef in cmd/compile/internal/noder.(*genInst).getInstantiation
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:626
+ 1  0x0000000000bf443f in cmd/compile/internal/noder.(*genInst).scanForGenCalls.func1
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:151
+ 2  0x00000000005c9670 in cmd/compile/internal/ir.Visit.func1
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/ir/visit.go:105
+ 3  0x00000000005b06ce in cmd/compile/internal/ir.doNodes
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/ir/node_gen.go:1512
+ 4  0x00000000005b06ce in cmd/compile/internal/ir.(*Func).doChildren
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/ir/func.go:156
+ 5  0x00000000005c9697 in cmd/compile/internal/ir.DoChildren
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/ir/visit.go:94
+ 6  0x00000000005c9697 in cmd/compile/internal/ir.Visit.func1
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/ir/visit.go:106
+ 7  0x00000000005c95f8 in cmd/compile/internal/ir.Visit
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/ir/visit.go:108
+ 8  0x0000000000bf3c50 in cmd/compile/internal/noder.(*genInst).scanForGenCalls
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:133
+ 9  0x0000000000bf37c9 in cmd/compile/internal/noder.(*genInst).buildInstantiations
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:60
+10  0x0000000000bc6b51 in cmd/compile/internal/noder.BuildInstantiations
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:44
+11  0x0000000000bc6b51 in cmd/compile/internal/noder.(*irgen).generate
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/irgen.go:331
+12  0x0000000000bc672d in cmd/compile/internal/noder.check2
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/irgen.go:92
+13  0x0000000000bca835 in cmd/compile/internal/noder.LoadPackage
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/noder.go:90
+14  0x0000000000c3b933 in cmd/compile/internal/gc.Main
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/gc/main.go:191
+15  0x0000000000c5f2bd in main.main
+    at /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/main.go:55
+16  0x0000000000438212 in runtime.main
+    at /home/rufeer/Codes/github/go1.18.7/src/runtime/proc.go:250
+17  0x0000000000467281 in runtime.goexit
+    at /home/rufeer/Codes/github/go1.18.7/src/runtime/asm_amd64.s:1571
+(dlv) n
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:627 (PC: 0xbf732e)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   622:                 nameNode.Func.Dcl = nameNode.Func.Inl.Dcl
+   623:         }
+   624: }
+   625:
+   626: // getInstantiation gets the instantiantion and dictionary of the function or method nameNode
+=> 627: // with the type arguments shapes. If the instantiated function is not already
+   628: // cached, then it calls genericSubst to create the new instantiation.
+   629: func (g *genInst) getInstantiation(nameNode *ir.Name, shapes []*types.Type, isMeth bool) *instInfo {
+   630:         if nameNode.Func == nil {
+   631:                 // If nameNode.Func is nil, this must be a reference to a method of
+   632:                 // an imported instantiated type. We will have already called
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:637 (PC: 0xbf7335)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   632:                 // an imported instantiated type. We will have already called
+   633:                 // g.instantiateMethods() on the fully-instantiated type, so
+   634:                 // g.instInfoMap[sym] will be non-nil below.
+   635:                 rcvr := nameNode.Type().Recv()
+   636:                 if rcvr == nil || !deref(rcvr.Type).IsFullyInstantiated() {
+=> 637:                         base.FatalfAt(nameNode.Pos(), "Unexpected function instantiation %v with no body", nameNode)
+   638:                 }
+   639:         } else {
+   640:                 checkFetchBody(nameNode)
+   641:         }
+   642:
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:641 (PC: 0xbf73f0)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   636:                 if rcvr == nil || !deref(rcvr.Type).IsFullyInstantiated() {
+   637:                         base.FatalfAt(nameNode.Pos(), "Unexpected function instantiation %v with no body", nameNode)
+   638:                 }
+   639:         } else {
+   640:                 checkFetchBody(nameNode)
+=> 641:         }
+   642:
+   643:         var tparams []*types.Type
+   644:         if isMeth {
+   645:                 // Get the type params from the method receiver (after skipping
+   646:                 // over any pointer)
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:653 (PC: 0xbf747a)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   648:                 recvType = deref(recvType)
+   649:                 if recvType.IsFullyInstantiated() {
+   650:                         // Get the type of the base generic type, so we get
+   651:                         // its original typeparams.
+   652:                         recvType = recvType.OrigType()
+=> 653:                 }
+   654:                 tparams = recvType.RParams()
+   655:         } else {
+   656:                 fields := nameNode.Type().TParams().Fields().Slice()
+   657:                 tparams = make([]*types.Type, len(fields))
+   658:                 for i, f := range fields {
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:654 (PC: 0xbf749e)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   649:                 if recvType.IsFullyInstantiated() {
+   650:                         // Get the type of the base generic type, so we get
+   651:                         // its original typeparams.
+   652:                         recvType = recvType.OrigType()
+   653:                 }
+=> 654:                 tparams = recvType.RParams()
+   655:         } else {
+   656:                 fields := nameNode.Type().TParams().Fields().Slice()
+   657:                 tparams = make([]*types.Type, len(fields))
+   658:                 for i, f := range fields {
+   659:                         tparams[i] = f.Type
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:655 (PC: 0xbf74b0)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   650:                         // Get the type of the base generic type, so we get
+   651:                         // its original typeparams.
+   652:                         recvType = recvType.OrigType()
+   653:                 }
+   654:                 tparams = recvType.RParams()
+=> 655:         } else {
+   656:                 fields := nameNode.Type().TParams().Fields().Slice()
+   657:                 tparams = make([]*types.Type, len(fields))
+   658:                 for i, f := range fields {
+   659:                         tparams[i] = f.Type
+   660:                 }
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:656 (PC: 0xbf74ca)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   651:                         // its original typeparams.
+   652:                         recvType = recvType.OrigType()
+   653:                 }
+   654:                 tparams = recvType.RParams()
+   655:         } else {
+=> 656:                 fields := nameNode.Type().TParams().Fields().Slice()
+   657:                 tparams = make([]*types.Type, len(fields))
+   658:                 for i, f := range fields {
+   659:                         tparams[i] = f.Type
+   660:                 }
+   661:         }
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:655 (PC: 0xbf74be)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   650:                         // Get the type of the base generic type, so we get
+   651:                         // its original typeparams.
+   652:                         recvType = recvType.OrigType()
+   653:                 }
+   654:                 tparams = recvType.RParams()
+=> 655:         } else {
+   656:                 fields := nameNode.Type().TParams().Fields().Slice()
+   657:                 tparams = make([]*types.Type, len(fields))
+   658:                 for i, f := range fields {
+   659:                         tparams[i] = f.Type
+   660:                 }
+(dlv)
+> cmd/compile/internal/noder.(*genInst).getInstantiation() /home/rufeer/Codes/github/go1.18.7/src/cmd/compile/internal/noder/stencil.go:664 (PC: 0xbf7501)
+Warning: debugging optimized function
+Warning: listing may not match stale executable
+   659:                         tparams[i] = f.Type
+   660:                 }
+   661:         }
+   662:
+   663:         // Convert any non-shape type arguments to their shape, so we can reduce the
+=> 664:         // number of instantiations we have to generate. You can actually have a mix
+   665:         // of shape and non-shape arguments, because of inferred or explicitly
+   666:         // specified concrete type args.
+   667:         s1 := make([]*types.Type, len(shapes))
+   668:         for i, t := range shapes {
+   669:                 var tparam *types.Type
+(dlv) p fields
+Command failed: could not find symbol value for fields
+(dlv) p typecheck.Target.Decls[1].Body[0].X.Targs
+[]cmd/compile/internal/ir.Node len: 1, cap: 1, [
+        *cmd/compile/internal/ir.Name {
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc00039f040),
+                BuiltinOp: OXXX (0),
+                Class: Pxxx (0),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc00009ebe0),
+                Func: *cmd/compile/internal/ir.Func nil,
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node nil,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+]
+(dlv) p typecheck.Target.Decls[1].Body[0].X.Targs[0]
+cmd/compile/internal/ir.Node(*cmd/compile/internal/ir.Name) *{
+        miniExpr: cmd/compile/internal/ir.miniExpr {
+                miniNode: (*"cmd/compile/internal/ir.miniNode")(0xc00039f040),
+                typ: *(*"cmd/compile/internal/types.Type")(0xc0003f4540),
+                init: cmd/compile/internal/ir.Nodes len: 0, cap: 0, nil,
+                flags: 0,},
+        BuiltinOp: OXXX (0),
+        Class: Pxxx (0),
+        pragma: 0,
+        flags: 0,
+        DictIndex: 0,
+        sym: *cmd/compile/internal/types.Sym {
+                Linkname: "",
+                Pkg: *(*"cmd/compile/internal/types.Pkg")(0xc00009e5f0),
+                Name: "int",
+                Def: cmd/compile/internal/types.Object(*cmd/compile/internal/ir.Name) ...,
+                Block: 0,
+                Lastlineno: (*"cmd/internal/src.XPos")(0xc00009ec1c),
+                flags: 0,},
+        Func: *cmd/compile/internal/ir.Func nil,
+        Offset_: 0,
+        val: go/constant.Value nil,
+        Opt: interface {} nil,
+        Embed: *[]cmd/compile/internal/ir.Embed nil,
+        PkgName: *cmd/compile/internal/ir.PkgName nil,
+        Defn: cmd/compile/internal/ir.Node nil,
+        Curfn: *cmd/compile/internal/ir.Func nil,
+        Ntype: cmd/compile/internal/ir.Ntype nil,
+        Heapaddr: *cmd/compile/internal/ir.Name nil,
+        Innermost: *cmd/compile/internal/ir.Name nil,
+        Outer: *cmd/compile/internal/ir.Name nil,}
+(dlv) p typecheck.Target.Decls[1].Body[0].X.Targs[0].typ
+*cmd/compile/internal/types.Type {
+        extra: interface {} nil,
+        width: 8,
+        methods: cmd/compile/internal/types.Fields {
+                s: *[]*cmd/compile/internal/types.Field nil,},
+        allMethods: cmd/compile/internal/types.Fields {
+                s: *[]*cmd/compile/internal/types.Field nil,},
+        nod: cmd/compile/internal/types.Object(*cmd/compile/internal/ir.Name) *{
+                miniExpr: (*"cmd/compile/internal/ir.miniExpr")(0xc00039f040),
+                BuiltinOp: OXXX (0),
+                Class: Pxxx (0),
+                pragma: 0,
+                flags: 0,
+                DictIndex: 0,
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc00009ebe0),
+                Func: *cmd/compile/internal/ir.Func nil,
+                Offset_: 0,
+                val: go/constant.Value nil,
+                Opt: interface {} nil,
+                Embed: *[]cmd/compile/internal/ir.Embed nil,
+                PkgName: *cmd/compile/internal/ir.PkgName nil,
+                Defn: cmd/compile/internal/ir.Node nil,
+                Curfn: *cmd/compile/internal/ir.Func nil,
+                Ntype: cmd/compile/internal/ir.Ntype nil,
+                Heapaddr: *cmd/compile/internal/ir.Name nil,
+                Innermost: *cmd/compile/internal/ir.Name nil,
+                Outer: *cmd/compile/internal/ir.Name nil,},
+        underlying: *cmd/compile/internal/types.Type {
+                extra: interface {} nil,
+                width: 8,
+                methods: (*"cmd/compile/internal/types.Fields")(0xc0003f4558),
+                allMethods: (*"cmd/compile/internal/types.Fields")(0xc0003f4560),
+                nod: cmd/compile/internal/types.Object(*cmd/compile/internal/ir.Name) ...,
+                underlying: *(*"cmd/compile/internal/types.Type")(0xc0003f4540),
+                cache: (*"struct { cmd/compile/internal/types.ptr *cmd/compile/internal/types.Type; cmd/compile/internal/types.slice *cmd/compile/internal/types.Type }")(0xc0003f4580),
+                sym: *(*"cmd/compile/internal/types.Sym")(0xc00009ebe0),
+                vargen: 0,
+                kind: TINT (9),
+                align: 8,
+                flags: 0,
+                rparams: *[]*cmd/compile/internal/types.Type nil,
+                origType: *cmd/compile/internal/types.Type nil,},
+        cache: struct { cmd/compile/internal/types.ptr *cmd/compile/internal/types.Type; cmd/compile/internal/types.slice *cmd/compile/internal/types.Type } {
+                ptr: *cmd/compile/internal/types.Type nil,
+                slice: *cmd/compile/internal/types.Type nil,},
+        sym: *cmd/compile/internal/types.Sym {
+                Linkname: "",
+                Pkg: *(*"cmd/compile/internal/types.Pkg")(0xc00009e5f0),
+                Name: "int",
+                Def: cmd/compile/internal/types.Object(*cmd/compile/internal/ir.Name) ...,
+                Block: 0,
+                Lastlineno: (*"cmd/internal/src.XPos")(0xc00009ec1c),
+                flags: 0,},
+        vargen: 0,
+        kind: TINT (9),
+        align: 8,
+        flags: 0,
+        rparams: *[]*cmd/compile/internal/types.Type nil,
+        origType: *cmd/compile/internal/types.Type nil,}
+(dlv) p typecheck.Target.Decls[1].Body[0].X.Targs[0].typ
